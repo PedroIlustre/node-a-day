@@ -1,4 +1,4 @@
-import http from 'node:http' //http um modulo interno possuí o prefixo node:
+import http from 'node:http'
 import { Database } from './database.js'
 import { randomUUID } from 'node:crypto'
 import { json } from '../middlewares/json.js'
@@ -34,6 +34,5 @@ const server = http.createServer(async (req, res) => {
 
     return res.writeHead(404).end('Error')
 })
-
 
 server.listen(3333)
