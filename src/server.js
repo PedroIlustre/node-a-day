@@ -1,35 +1,28 @@
 import http from 'node:http'
-import { Database } from './database.js'
-import { randomUUID } from 'node:crypto'
 import { json } from '../middlewares/json.js'
+import { routes } from './routes.js'
 
-const database = new Database()
+// Query parameter - parametro enviado no url ex.: http://localhost:8080/users?userId=2 (nao usar dados sensívels, mais parameteros de paginação, ordenação, etc)
+// Route parameter - parametro enviado na rota ex.: http://localhost:8080/users/2 (usados para identificação de recurso. Mesmo assim, dados sensíveis NAO devem ser enviados)
+// Body request  - envio de informações de um formulário ex.: http://localhost:8080/users e lá na app tem o json body com os parametros da requisição
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req
 
     await json(req, res)
 
-    if (method === "GET" && url === "/users") {
-        const users = database.select('users')
+    const route = routes.find(route => {
+        return route.method == method && route.path.test(url)
+    })
+    
+    if (route) {
+        const routeParams = req.url.match(route.path)
 
-        return res
-            .end(JSON.stringify(users))
-    }
+        req.params = { ...routeParams.groups }
 
-    if (method === "POST" && url === "/users") {
+        // console.info(req.params)
 
-        const { name, email } = req.body
-
-        const user = {
-            id: randomUUID(),
-            name,
-            email,
-        }
-
-        database.insert('users', user)
-
-        return res.writeHead(201).end()
+        return route.handler(req, res)
     }
 
     return res.writeHead(404).end('Error')
