@@ -1,24 +1,14 @@
 import http from 'node:http' //http um modulo interno possuí o prefixo node:
-
+import { json } from '../middlewares/json.js'
 const users = []
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req
-    const buffers = []
 
-    for await (const chunk of req) {
-        buffers.push(chunk)
-    }
+    await json(req, res)
 
-    try {
-        req.body = JSON.parse(Buffer.concat(buffers).toString())
-    } catch {
-        req.body = null
-    }
- 
     if (method === "GET" && url === "/users") {
         return res
-            .setHeader('Content-type','application/json')
             .end(JSON.stringify(users))
     }
 
