@@ -12,11 +12,11 @@ export const routes = [
         handler: (req, res) => {
             const { search } = req.query
 
-            const users = database.select('tasks', search ? {
+            const tasks = database.select('tasks', search ? {
                 title: search,
                 description: search,
             } : null)
-            return res.end(JSON.stringify(users))
+            return res.end(JSON.stringify(tasks))
         }
     },
     {
@@ -46,11 +46,11 @@ export const routes = [
     },
     {
         method: 'DELETE',
-        path: buildRoutePath('/users/:id'),
+        path: buildRoutePath('/tasks/:id'),
         handler: (req, res) => {
             const { id } = req.params
-            database.delete('users', id)
-            return res.writeHead(204).end()
+            const taskRes = database.delete('tasks', id)
+            return res.end(taskRes)
         }
     },
     {

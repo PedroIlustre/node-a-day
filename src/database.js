@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises'
-import { rootCertificates } from 'node:tls'
 
 const databasePath = new URL ('db.json', import.meta.url)
 
@@ -47,11 +46,14 @@ export class Database {
 
     delete (table, id) {
         const rowIndex = this.#database[table].findIndex(row => row.id == id)
-
+        let resMsg = 'Nothing to delete'
         if (rowIndex > -1) {
             this.#database[table].splice(rowIndex, 1)
             this.#persist();
+            resMsg = 'The row with the id: '+ id +' has been successfuly deleted'
         }
+
+        return resMsg
     }
 
     update (table, id, data) {

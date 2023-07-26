@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises'
-import { rootCertificates } from 'node:tls'
 
 const databasePath = new URL ('db.json', import.meta.url)
 
