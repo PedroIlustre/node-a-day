@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": { 
-    "dev": "node --watch fundamentals/src/server.js"
+    "dev-fundamentals": "node --watch fundamentals/src/server.js",
+    "dev": "node --watch src/server.js"
   },
   "keywords": [],
   "author": "",
