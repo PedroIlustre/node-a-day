@@ -45,20 +45,37 @@ export class Database {
     }
 
     delete (table, id) {
-        const rowIndex = this.#database[table].findIndex(row => row.id == id)
-
+        const rowIndex = this.getRowIndex(table, id)
+        let resMsg = 'Nothing to delete. Check the informed Id'
         if (rowIndex > -1) {
             this.#database[table].splice(rowIndex, 1)
             this.#persist();
+            resMsg = 'The row with the id: '+ id +' has been successfuly deleted'
         }
+
+        return resMsg
     }
 
     update (table, id, data) {
-        const rowIndex = this.#database[table].findIndex(row => row.id == id)
+        const rowIndex = this.getRowIndex(table, id)
+        let resMsg = 'Nothing to update. Check the informed Id'
 
-        if (rowIndex > -1) {
+        if (data.created_at) {
             this.#database[table][rowIndex] = { id, ...data}
             this.#persist();
+            resMsg = 'The task with the id: '+ id +' has been successfuly updated'
         }
+        return resMsg
+    }
+
+    searchById (table, id) {
+        const data = this.#database[table] || [];
+        const record = data.find(row => row.id === id);
+
+        return record || [];
+    }
+
+    getRowIndex (table, id) {
+        return this.#database[table].findIndex(row => row.id == id)
     }
 }
