@@ -1,6 +1,7 @@
 import http from 'node:http'
 import { json } from '../middlewares/json.js'
 import { routes } from './routes.js'
+import { extractQueryParams } from '../utils/extract-query-params.js'
 
 // Query parameter - parametro enviado no url ex.: http://localhost:8080/users?userId=2 (nao usar dados sensívels, mais parameteros de paginação, ordenação, etc)
 // Route parameter - parametro enviado na rota ex.: http://localhost:8080/users/2 (usados para identificação de recurso. Mesmo assim, dados sensíveis NAO devem ser enviados)
@@ -18,9 +19,10 @@ const server = http.createServer(async (req, res) => {
     if (route) {
         const routeParams = req.url.match(route.path)
 
-        req.params = { ...routeParams.groups }
+        const { query, ...params } = routeParams.groups
 
-        // console.info(req.params)
+        req.params = params
+        req.query = query ? extractQueryParams(query) : {}
 
         return route.handler(req, res)
     }
