@@ -20,6 +20,15 @@ export const routes = [
         }
     },
     {
+        method: 'GET',
+        path: buildRoutePath('/tasks/:id'),
+        handler: (req, res) => {
+            const { id } = req.params
+            const task = database.searchById('tasks',id)
+            return res.end(JSON.stringify(task))
+        }
+    },
+    {
         method: 'POST',
         path: buildRoutePath('/tasks'),
         handler: (req, res) => {
@@ -34,9 +43,9 @@ export const routes = [
                 id: randomUUID(),
                 title,
                 description,
-                created_at:new Date(),
-                updated_at:null,
-                completed_at:null,
+                created_at: new Date(),
+                updated_at: null,
+                completed_at: null,
             }
 
             database.insert('tasks', task)
@@ -55,13 +64,23 @@ export const routes = [
     },
     {
         method: 'PUT',
-        path: buildRoutePath('/users/:id'),
+        path: buildRoutePath('/tasks/:id'),
         handler: (req, res) => {
             const { id } = req.params
-            const { name, email } = req.body
-
-            database.update('users', id,  { name, email })
-            return res.writeHead(204).end()
+            const { title, description } = req.body
+            const { created_at, completed_at } = database.searchById('tasks', id)
+            const taskRes = database.update('tasks', id,  { title, description, updated_at: new Date(), created_at, completed_at})
+            return res.writeHead(200).end(taskRes)
+        }
+    },
+    {
+        method: 'PATCH',
+        path: buildRoutePath('/tasks/:id/complete'),
+        handler: (req, res) => {
+            const { id } = req.params
+            const { title, description, created_at } = database.searchById('tasks', id)
+            const taskRes = database.update('tasks', id,  { title, description, updated_at: new Date(), completed_at: new Date(), created_at })
+            return res.writeHead(200).end(taskRes)
         }
     }
 
