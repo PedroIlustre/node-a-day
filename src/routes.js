@@ -82,6 +82,16 @@ export const routes = [
             const taskRes = database.update('tasks', id,  { title, description, updated_at: new Date(), completed_at: new Date(), created_at })
             return res.writeHead(200).end(taskRes)
         }
+    },
+    {
+        method: 'PATCH',
+        path: buildRoutePath('/tasks/:id/incomplete'),
+        handler: (req, res) => {
+            const { id } = req.params
+            const { title, description, created_at } = database.searchById('tasks', id)
+            const taskRes = database.update('tasks', id,  { title, description, updated_at: new Date(), completed_at: null, created_at })
+            return res.writeHead(200).end(taskRes)
+        }
     }
 
 ]
