@@ -4,18 +4,8 @@ import { Writable, Transform } from 'node:stream'
 
 export class UploadCsvFile {
 
-  upload(req) {
-    let data = [];
-
-    req.on('data', (chunk) => {
-      data.push(chunk);
-    });
-
-    const fileData = Buffer.concat(data);
-
-    console.log(fileData)
-    return 0
-    const readableStream = fs.createReadStream('file.csv')
+  upload() {
+    const readableStream = fs.createReadStream('task_import.csv')
     const transformStreamToObject = csv({separator:';'})
     const transformStreamToString = new Transform({
       objectMode: true,
@@ -25,16 +15,27 @@ export class UploadCsvFile {
     })
     const writableStream = new Writable({write(chunk, encoding, callback) {
       const string = chunk.toString()
-      const data = JSON.parte(string)
-      console.info(data)
+      const data = JSON.parse(string)
       callback()
     }})
+
+    const dataArray = []; // Array to store data emitted by the writableStream
+
+    // Event listener to capture the data emitted by the writableStream
+    writableStream.on('data', (data) => {
+      dataArray.push(data);
+    });
     
-    readableStream
+    writableStream.on('finish', () => {
+      // console.log(dataArray); 
+      // console.log('Writable Stream Finished');
+      // You can access the dataArray here after the writableStream is finished
+    });
+
+    return readableStream
     .pipe(transformStreamToObject)
     .pipe(transformStreamToString)
     .pipe(writableStream)
-    .on('close', () => console.log('Finalizou', Date()))
   }
 
 }

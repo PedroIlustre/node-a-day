@@ -45,7 +45,7 @@ export const routes = [
                 title,
                 description,
                 created_at: new Date(),
-                updated_at: null,
+                updated_at: new Date(),
                 completed_at: null,
             }
 
@@ -98,7 +98,8 @@ export const routes = [
         method: 'POST',
         path: buildRoutePath('/tasks/upload'),
         handler: (req, res) => {
-            uploadCsvFile.upload(req)
+            uploadCsvFile.upload()
+            return res.writeHead(200).end('File imported')
         }
     }
 
