@@ -1,14 +1,19 @@
 {
   "name": "a-day",
-  "type":"module",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": { 
+  "scripts": {
     "dev-fundamentals": "node --watch fundamentals/src/server.js",
     "dev": "node --watch src/server.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "fs": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1"
+  }
 }
