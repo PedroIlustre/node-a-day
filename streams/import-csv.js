@@ -1,21 +1,21 @@
-import { parse } from 'csv-parse';
+import parse from 'csv-parser'
 import fs from 'node:fs';
 
-const csvPath = new URL('./tasks.csv', import.meta.url);
+const csvPath = new URL('./task_import.csv', import.meta.url);
 
 const stream = fs.createReadStream(csvPath);
 
 const csvParse = parse({
   delimiter: ',',
   skipEmptyLines: true,
-  fromLine: 2 // skip the header line
+  fromLine: 2
 });
 
 async function run() {
   const linesParse = stream.pipe(csvParse);
-
   for await (const line of linesParse) {
-    const [title, description] = line;
+    const title = line.title;
+    const description = line.description;
 
     await fetch('http://localhost:3333/tasks', {
       method: 'POST',
@@ -27,9 +27,6 @@ async function run() {
         description,
       })
     })
-
-    // Uncomment this line to see the import working in slow motion (open the db.json)
-    // await wait(1000)
   }
 
 }

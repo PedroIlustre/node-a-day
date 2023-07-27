@@ -27,8 +27,8 @@ export class UploadCsvFile {
     });
     
     writableStream.on('finish', () => {
-      console.log(dataArray); 
-      console.log('Writable Stream Finished');
+      // console.log(dataArray); 
+      // console.log('Writable Stream Finished');
       // You can access the dataArray here after the writableStream is finished
     });
 
