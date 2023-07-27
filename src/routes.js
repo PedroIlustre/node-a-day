@@ -1,9 +1,10 @@
 import { Database } from './database.js'
 import { randomUUID } from 'node:crypto'
 import { buildRoutePath } from '../utils/build-route-path.js'
+import { UploadCsvFile } from './upload-csv-file.js'
 
 const database = new Database()
-
+const uploadCsvFile = new UploadCsvFile()
 
 export const routes = [
     {
@@ -91,6 +92,13 @@ export const routes = [
             const { title, description, created_at } = database.searchById('tasks', id)
             const taskRes = database.update('tasks', id,  { title, description, updated_at: new Date(), completed_at: null, created_at })
             return res.writeHead(200).end(taskRes)
+        }
+    },
+    {
+        method: 'POST',
+        path: buildRoutePath('/tasks/upload'),
+        handler: (req, res) => {
+            uploadCsvFile.upload(req)
         }
     }
 
