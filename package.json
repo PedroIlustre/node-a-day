@@ -1,0 +1,50 @@
+{
+  "name": "a-day",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "append-field": "^1.0.0",
+    "buffer-from": "^1.1.2",
+    "busboy": "^1.6.0",
+    "concat-stream": "^1.6.2",
+    "core-util-is": "^1.0.3",
+    "csv-parser": "^3.0.0",
+    "fastify": "^4.21.0",
+    "fs": "^0.0.1-security",
+    "inherits": "^2.0.4",
+    "isarray": "^1.0.0",
+    "media-typer": "^0.3.0",
+    "mime-db": "^1.52.0",
+    "mime-types": "^2.1.35",
+    "minimist": "^1.2.8",
+    "mkdirp": "^0.5.6",
+    "multer": "^1.4.5-lts.1",
+    "object-assign": "^4.1.1",
+    "process-nextick-args": "^2.0.1",
+    "readable-stream": "^2.3.8",
+    "safe-buffer": "^5.1.2",
+    "streamsearch": "^1.1.0",
+    "string_decoder": "^1.1.1",
+    "type-is": "^1.6.18",
+    "typedarray": "^0.0.6",
+    "util-deprecate": "^1.0.2",
+    "xtend": "^4.0.2"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@types/node": "^20.4.5",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "eslint": "^8.45.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --ext .ts --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
