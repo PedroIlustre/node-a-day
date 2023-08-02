@@ -5,6 +5,12 @@ import { randomUUID } from 'crypto'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 export async function transactionsRoutes(app: FastifyInstance) {
+
+	// pré-handler global para esse plugin
+	// app.addHook('preHandler', async (request) => {
+	// 	console.log(`[${request.method}] ${request.url}`)
+	// })
+
 	// list all transactions
 	app.get(
 		'/',
