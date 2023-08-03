@@ -33,6 +33,7 @@
     "safe-buffer": "^5.1.2",
     "streamsearch": "^1.1.0",
     "string_decoder": "^1.1.1",
+    "tsx": "^3.12.7",
     "type-is": "^1.6.18",
     "typedarray": "^0.0.6",
     "util-deprecate": "^1.0.2",
