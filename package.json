@@ -44,6 +44,7 @@
     "@typescript-eslint/parser": "^6.2.0",
     "eslint": "^8.45.0",
     "supertest": "^6.3.3",
+    "tsup": "^7.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6",
     "vitest": "^0.34.1"
@@ -52,7 +53,8 @@
     "dev": "tsx watch src/server.ts",
     "test": "npx vitest",
     "lint": "eslint src --ext .ts --fix",
-    "knex": "node --no-warnings --loader tsx ./node_modules/.bin/knex"
+    "knex": "node --no-warnings --loader tsx ./node_modules/.bin/knex",
+    "build": "tsup src --out-dir build"
   },
   "keywords": [],
   "author": "",
