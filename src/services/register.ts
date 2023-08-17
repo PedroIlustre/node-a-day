@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs"
 import { prisma } from "@/lib/prisma"
-import { PrismaUsersRepository } from "@/repositories/prisma-users-repository"
+import { UsersRepository } from "@/repositories/users-repository"
 
 interface RegisterServiceRequest {
 	name: string,
@@ -9,7 +9,7 @@ interface RegisterServiceRequest {
 }
 
 export class RegisterService {
-	constructor(private userRepository: any) { }
+	constructor(private usersRepository: UsersRepository) { }
 
 	async execute({ name, email, password }: RegisterServiceRequest) {
 
@@ -25,7 +25,7 @@ export class RegisterService {
 
 		const password_hash = await hash(password, 6)
 
-		await this.userRepository.create({ name, email, password_hash })
+		await this.usersRepository.create({ name, email, password_hash })
 	}
 }
 
