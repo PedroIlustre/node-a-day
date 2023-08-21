@@ -67,7 +67,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "test": "npx vitest",
+    "test-api": "npx vitest",
     "lint": "eslint src --ext .ts --fix",
     "knex": "node --no-warnings --loader tsx ./node_modules/.bin/knex",
     "build": "tsup src --out-dir build"
