@@ -32,7 +32,7 @@ describe('Get User profile service', () => {
 	})
 
 	it('Should not be able to get user profile', async () => {
-		expect(() =>
+		await expect(() =>
 			sut.execute({
 				userId: 'non-existing-id'
 			})
